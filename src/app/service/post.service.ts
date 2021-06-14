@@ -35,4 +35,8 @@ export class PostService {
   public fetchPosts(): Observable<Post[]> {
     return this.http.get<Post[]>('https://jsonplaceholder.typicode.com/posts');
   }
+
+  public fetchPost(id: string): Observable<Post> {
+    return this.http.get<Post>('https://jsonplaceholder.typicode.com/posts/' + id);
+  }
 }

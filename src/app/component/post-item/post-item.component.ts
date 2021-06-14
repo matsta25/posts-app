@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
+import {Post} from '../../model/post.model';
+import {PostService} from '../../service/post.service';
 
 @Component({
   selector: 'app-post-item',
@@ -8,16 +10,25 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class PostItemComponent implements OnInit {
 
+  public post: Post = {
+    userId: 0,
+    id: 0,
+    title: '',
+    body: ''
+  };
+
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private postService: PostService
   ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id') || '0';
 
-    console.log(id);
-
-  //  PRZERWA 14:10
-
+    this.postService.fetchPost(id).subscribe(
+      (post: Post) => {
+        this.post = post;
+      }
+    );
   }
 }
